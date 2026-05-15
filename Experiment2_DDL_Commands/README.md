@@ -105,123 +105,216 @@ CREATE TABLE Table_Name (
 
 **Question 1**
 --
--- Paste Question 1 here
+Insert the following products into the Products table:
 
+Name        Category     Price       Stock
+----------  -----------  ----------  ----------
+Smartphone  Electronics  800         150
+Headphones  Accessories  200         300
+
+**Code:**
 ```sql
--- Paste your SQL code below for Question 1
+INSERT into Products(Name, Category, Price, Stock)
+Values
+('Smartphone', 'Electronics', 800, 150),
+('Headphones', 'Accessories', 200, 300); 
 ```
 
 **Output:**
 
-![Output1](output.png)
+<img width="945" height="253" alt="image" src="https://github.com/user-attachments/assets/e8bf4e43-8ae9-4fa5-8d1e-552b34eff391" />
+
 
 **Question 2**
 ---
--- Paste Question 2 here
+Create a table named Tasks with the following columns:
+
+TaskID as INTEGER
+TaskName as TEXT
+DueDate as DATE
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 2
+CREATE table Tasks(
+TaskID INTEGER,
+TaskName TEXT,
+DueDate DATE
+);
 ```
 
 **Output:**
 
-![Output2](output.png)
+<img width="1195" height="300" alt="image" src="https://github.com/user-attachments/assets/d15ae2a8-adb5-404e-bbac-da35d43e63a7" />
+
 
 **Question 3**
 ---
--- Paste Question 3 here
+Create a table named Orders with the following columns:
+
+OrderID as INTEGER
+OrderDate as TEXT
+CustomerID as INTEGER
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 3
+CREATE table Orders(
+OrderID INTEGER,
+OrderDate TEXT,
+CustomerID INTEGER
+);
 ```
 
 **Output:**
 
-![Output3](output.png)
+<img width="1193" height="292" alt="image" src="https://github.com/user-attachments/assets/fce8722f-dd3c-49d5-a708-7fa7782bbb6c" />
+
 
 **Question 4**
 ---
--- Paste Question 4 here
+Insert a customer with CustomerID 301, Name Michael Jordan, Address 123 Maple St, City Chicago, and ZipCode 60616 into the Customers table.
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 4
+SELECT * FROM Customers WHERE CustomerId = 301;
+INSERT INTO Customers(CustomerId, Name, Address, City, ZipCode)
+VALUES(301, 'Michael Jordan', '123 Maple St', 'Chicago', '60616');
 ```
 
 **Output:**
 
-![Output4](output.png)
+<img width="1197" height="156" alt="image" src="https://github.com/user-attachments/assets/c86eeb49-903c-4efb-b81c-db9c3a8c56be" />
+
 
 **Question 5**
 ---
--- Paste Question 5 here
+Insert the following students into the Student_details table:
+RollNo      Name        Gender      Subject     MARKS
+----------  ----------  ----------  ----------  ----------
+202            Ella King         F           Chemistry   87
+203            James Bond   M          Literature    78
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 5
+INSERT into Student_Details(RollNo, Name, Gender, Subject, MARKS)
+VALUES
+(202,'Ella King','F','Chemistry',87),
+(203,'James Bond', 'M','Literature', 78);
 ```
 
 **Output:**
 
-![Output5](output.png)
+<img width="1130" height="172" alt="image" src="https://github.com/user-attachments/assets/28356dda-8948-4c1b-b4bb-362fc0cc694b" />
+
 
 **Question 6**
 ---
--- Paste Question 6 here
+Create a table named Invoices with the following constraints:
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+Amount as REAL should be greater than 0.
+DueDate as DATE should be greater than the InvoiceDate.
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 6
+CREATE table Invoices(
+InvoiceID INTEGER PRIMARY KEY,
+InvoiceDate DATE,
+Amount REAL CHECK(Amount > 0),
+DueDate DATE CHECK(DueDate > InvoiceDate),
+OrderID INTEGER,
+FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
 ```
 
 **Output:**
 
-![Output6](output.png)
+<img width="1162" height="200" alt="image" src="https://github.com/user-attachments/assets/be5578c4-438f-4c88-8e1f-6658932f272a" />
+
 
 **Question 7**
 ---
--- Paste Question 7 here
+Write an SQL query to add two new columns, first_name and last_name, to the table employee. Both columns should have a data type of varchar(50).
 
+**Code:**
 ```sql
--- Paste your SQL code below for Question 7
+ALTER table employee ADD COLUMN first_name varchar(50);
+ALTER table employee ADD COLUMN last_name varchar(50);
 ```
 
 **Output:**
+<img width="1195" height="227" alt="image" src="https://github.com/user-attachments/assets/0d920ff7-9a20-4ce2-9ea6-3016f4c59ebd" />
 
-![Output7](output.png)
 
 **Question 8**
 ---
--- Paste Question 8 here
-
+Write an SQL Query to add the attributes designation, net_salary, and dob to the Companies table with the following data types:
+designation as VARCHAR(50)
+net_salary as NUMBER
+dob as DATE
+ 
+**Code:**
 ```sql
--- Paste your SQL code below for Question 8
+ALTER TABLE Companies add column designation varchar(50);
+ALTER TABLE Companies add column net_salary number;
+ALTER TABLE Companies add column dob date;
 ```
 
 **Output:**
 
-![Output8](output.png)
+<img width="1203" height="327" alt="image" src="https://github.com/user-attachments/assets/2b27d480-8aa2-4dd9-877f-d5d03d66b491" />
+
 
 **Question 9**
 ---
--- Paste Question 9 here
+Create a table named Locations with the following columns:
+
+LocationID as INTEGER
+LocationName as TEXT
+Address as TEXT
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 9
+CREATE table Locations(
+LocationID INTEGER,
+LocationName TEXT,
+Address TEXT
+);
 ```
 
 **Output:**
+<img width="1205" height="298" alt="image" src="https://github.com/user-attachments/assets/0b96e51d-55d4-4bf9-92ea-7f55358e5e97" />
 
-![Output9](output.png)
 
 **Question 10**
 ---
--- Paste Question 10 here
+Create a table named Employees with the following columns:
+
+EmployeeID as INTEGER
+FirstName as TEXT
+LastName as TEXT
+HireDate as DATE
+
+**Code:**
 
 ```sql
--- Paste your SQL code below for Question 10
+CREATE TABLE Employees(
+EmployeeID INTEGER,
+FirstName TEXT,
+LastName TEXT,
+HireDate DATE
+);
 ```
 
 **Output:**
+<img width="1193" height="227" alt="image" src="https://github.com/user-attachments/assets/972ca3fa-47c7-45c9-b191-a4a122da066e" />
 
-![Output10](output.png)
 
 
 ## RESULT
