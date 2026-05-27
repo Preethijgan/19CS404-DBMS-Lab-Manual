@@ -60,8 +60,30 @@ Key Differences:
 - Use `DBMS_OUTPUT.PUT_LINE` to display the result.
 - Call the procedure with a number as input.
 
+**Program:**
+```sql
+
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE find_square(p_number IN NUMBER) IS
+    v_square NUMBER;
+BEGIN
+    v_square := p_number * p_number;
+    DBMS_OUTPUT.PUT_LINE('Square of ' || p_number || ' is ' || v_square);
+END;
+/
+BEGIN
+    find_square(6);
+END;
+/
+
+```
+
 **Expected Output:**  
 Square of 6 is 36
+
+**Output:**
+<img width="945" height="162" alt="image" src="https://github.com/user-attachments/assets/6cd5249b-0f42-4b7f-8932-ba1f8bb43aa8" />
 
 ---
 
@@ -74,8 +96,44 @@ Square of 6 is 36
 - Return the result using the `RETURN` statement.
 - Call the function using a `SELECT` statement or in an anonymous block.
 
+
+**Program:**
+
+```sql
+
+CREATE OR REPLACE FUNCTION get_factorial(p_number IN NUMBER)
+RETURN NUMBER
+IS
+   v_result NUMBER := 1;
+BEGIN
+   IF p_number < 0 THEN
+      RETURN NULL;  
+   END IF;
+
+   FOR i IN 1..p_number LOOP
+      v_result := v_result * i;
+   END LOOP;
+
+   RETURN v_result;
+END;
+/
+
+DECLARE
+   v_input NUMBER := 5;
+   v_output NUMBER;
+BEGIN
+   v_output := get_factorial(v_input);
+   DBMS_OUTPUT.PUT_LINE('Factorial of ' || v_input || ' is ' || v_output);
+END;
+/
+
+```
 **Expected Output:**  
 Factorial of 5 is 120
+
+**Output:**
+<img width="1919" height="874" alt="image" src="https://github.com/user-attachments/assets/1b298332-00fa-469c-8cec-01a0aa20af8d" />
+
 
 ---
 
