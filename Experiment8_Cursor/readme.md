@@ -76,8 +76,49 @@ END;
 - Use a simple cursor to fetch and display employee names and designations.
 - Implement exception handling to catch the relevant exceptions and display appropriate messages.
 
+**Program:**
+```sql
+
+-- Step 1: Create employees table
+CREATE TABLE employees (
+    emp_id NUMBER PRIMARY KEY,
+    emp_name VARCHAR2(50),
+    designation VARCHAR2(50)
+);
+
+-- Step 2: Insert sample data
+INSERT INTO employees VALUES (1, 'Arun', 'Manager');
+INSERT INTO employees VALUES (2, 'Priya', 'Developer');
+INSERT INTO employees VALUES (3, 'Karthik', 'Tester');
+
+COMMIT;
+
+-- Step 3 & 4: PL/SQL program using simple cursor with exception handling
+
+DECLARE
+   CURSOR emp_cur IS
+      SELECT emp_name, designation FROM employees;
+   v_name employees.emp_name%TYPE;
+   v_desg employees.designation%TYPE;
+BEGIN
+   OPEN emp_cur;
+   LOOP
+      FETCH emp_cur INTO v_name, v_desg;
+      EXIT WHEN emp_cur%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE('Name: ' || v_name || ', Designation: ' || v_desg);
+   END LOOP;
+   CLOSE emp_cur;
+EXCEPTION
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+
+```
+
 **Output:**  
 The program should display the employee details or an error message.
+
+<img width="1918" height="911" alt="image" src="https://github.com/user-attachments/assets/be46110f-339e-4aec-a1eb-5915e64d4f56" />
 
 ---
 
@@ -95,8 +136,79 @@ The program should display the employee details or an error message.
 - Use a parameterized cursor to accept a salary range as input and fetch employees within that range.
 - Implement exception handling to catch and display relevant error messages.
 
+**Program:**
+```sql
+-- Step 1: Modify employees table by adding salary column
+ALTER TABLE employees
+ADD salary NUMBER(10,2);
+
+-- Step 2: Insert sample salary values
+UPDATE employees
+SET salary = 50000
+WHERE emp_id = 1;
+
+UPDATE employees
+SET salary = 35000
+WHERE emp_id = 2;
+
+UPDATE employees
+SET salary = 28000
+WHERE emp_id = 3;
+
+COMMIT;
+
+-- Step 3 & 4: PL/SQL program using parameterized cursor
+DECLARE
+    v_min_salary NUMBER := 30000;
+    v_max_salary NUMBER := 60000;
+
+    v_name employees.emp_name%TYPE;
+    v_designation employees.designation%TYPE;
+    v_salary employees.salary%TYPE;
+
+    CURSOR emp_cursor(p_min NUMBER, p_max NUMBER) IS
+        SELECT emp_name, designation, salary
+        FROM employees
+        WHERE salary BETWEEN p_min AND p_max;
+
+BEGIN
+    OPEN emp_cursor(v_min_salary, v_max_salary);
+
+    FETCH emp_cursor INTO v_name, v_designation, v_salary;
+
+    IF emp_cursor%NOTFOUND THEN
+        RAISE NO_DATA_FOUND;
+    END IF;
+
+    WHILE emp_cursor%FOUND LOOP
+        DBMS_OUTPUT.PUT_LINE(
+            'Employee Name: ' || v_name ||
+            ' | Designation: ' || v_designation ||
+            ' | Salary: ' || v_salary
+        );
+
+        FETCH emp_cursor INTO v_name, v_designation, v_salary;
+    END LOOP;
+
+    CLOSE emp_cursor;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No employees found in the given salary range.');
+
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
+END;
+
+
+
+
+```
+
 **Output:**  
 The program should display the employee details within the specified salary range or an error message if no data is found.
+
+<img width="1918" height="925" alt="image" src="https://github.com/user-attachments/assets/40787ed0-d7b2-474d-8f5d-4c80468c93f2" />
 
 ---
 
@@ -114,8 +226,67 @@ The program should display the employee details within the specified salary rang
 - Use a cursor FOR loop to fetch and display employee names along with their department numbers.
 - Implement exception handling to catch the relevant exceptions.
 
+**Program:**
+
+```sql
+-- Step 1: Modify employees table by adding dept_no column
+ALTER TABLE employees
+ADD dept_no NUMBER(5);
+
+-- Step 2: Insert sample department numbers
+UPDATE employees
+SET dept_no = 101
+WHERE emp_id = 1;
+
+UPDATE employees
+SET dept_no = 102
+WHERE emp_id = 2;
+
+UPDATE employees
+SET dept_no = 103
+WHERE emp_id = 3;
+
+COMMIT;
+
+-- Step 3 & 4: PL/SQL program using Cursor FOR Loop
+DECLARE
+    v_count NUMBER;
+
+BEGIN
+    -- Check if records exist
+    SELECT COUNT(*) INTO v_count
+    FROM employees;
+
+    IF v_count = 0 THEN
+        RAISE NO_DATA_FOUND;
+    END IF;
+
+    -- Cursor FOR Loop
+    FOR emp_rec IN (
+        SELECT emp_name, dept_no
+        FROM employees
+    )
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(
+            'Employee Name: ' || emp_rec.emp_name ||
+            ' | Department No: ' || emp_rec.dept_no
+        );
+    END LOOP;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No employees found in the database.');
+
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
+END;
+/
+
+```
 **Output:**  
 The program should display employee names with their department numbers or the appropriate error message if no data is found.
+
+<img width="1918" height="927" alt="image" src="https://github.com/user-attachments/assets/515d6036-46d8-4025-b979-106868c28a07" />
 
 ---
 
